@@ -25,7 +25,7 @@ var packmanJs = {
   src: function(destpath, callback) {
     glob('./ui/lib/**/*.js', null, callback);
   },
-  dest: './ui/www/script/packman.js',
+  dest: './ui/www/scripts/packman.js',
   serve: false
 }
 
@@ -40,7 +40,7 @@ app.use(sassMiddleware({
 }));
 app.get('/scripts/packman.js', assets(packmanJs)); // pre-bundle the assets
 app.use(express.static(staticPath));
-app.use('/template', express.static(templatePath, { extensions: [ 'html', 'htm' ]}));
+app.use('/templates', express.static(templatePath, { extensions: [ 'html', 'htm' ], fallthrough: false }));
 
 // parse cookies
 app.use(cookieParser());
@@ -57,4 +57,8 @@ app.use(function(req, res, next) {
 
 // fallback route for SPA
 var fallback = require('express-history-api-fallback');
-app.use(fallback('index.html', { root: staticPath }))
+app.use(fallback('index.html', { root: staticPath }));
+
+app.listen(config.port, function() {
+  logger.info('Listening on port %d', config.port);
+})
