@@ -1,0 +1,19 @@
+{
+  "bwipjs": {
+    "bcid": "code128",
+    "scale": 4,
+    "height": 15,
+    "includetext": true,
+    "textalign": "center",
+    "textsize": 13
+  },
+  "bunyan": {
+    "name": "packman",
+    "streams": [
+      {
+        "level": "info",
+        "path": "./packman-server.log"
+      }
+    ]
+  }
+}
