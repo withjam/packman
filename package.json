@@ -9,9 +9,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "assets-middleware": "0.0.3",
+    "blob": "0.0.4",
+    "body-parser": "^1.15.2",
     "bwip-js": "^1.2.2",
     "config": "^1.24.0",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
-    "mysql": "^2.12.0"
+    "express-history-api-fallback": "^2.1.0",
+    "multer": "^1.2.1",
+    "mysql": "^2.12.0",
+    "node-sass-middleware": "^0.10.0"
   }
 }
