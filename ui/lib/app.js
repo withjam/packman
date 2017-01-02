@@ -72,8 +72,8 @@
         templateUrl: 'templates/package.form.html',
         resolve: {
           data: function($http, $route) {
-            $http.get('/api/package/' + $route.current.params.packageName).then(function(response) {
-              console.log('response', response);
+            return $http.get('/api/package/' + $route.current.params.packageName).then(function(response) {
+              console.log('response', response.data.package);
               return response.data.package;
             })
           }

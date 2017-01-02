@@ -7,8 +7,10 @@ exports.router = function() {
   var qs = {
     'query_package': 'SELECT * FROM packages WHERE name = ?',
     'update_package': 'UPDATE packages SET body = ? WHERE id = ?',
-    'insert_package': 'INSERT INTO packages VALUES (NULL,?,?)',
+    'insert_package': 'CALL create_new_package(?)',
     'delete_package': 'DELETE FROM packages WHERE ID = ?',
+    'list_packages': 'SELECT * FROM packages',
+    'search_packages', 'CALL search_packages(?)',
     'query_package_items': 'SELECT * FROM package_items WHERE package_id = ?',
     'query_package_pics': 'SELECT * FROM package_photos WHERE package_id = ?'
   }
@@ -109,6 +111,17 @@ exports.router = function() {
     })
   })
 
+  router.get('/packages', function(req, res) {
+    req.db.query(qs.list_packages, function(err, results) {
+      if (err) {
+        req.logger.error('Could not list packages', err);
+        res.sendStatus(500);
+        return;
+      }
+      res.send({ packages: results });
+    });
+  });
+
   // CRUD for a single package
   router.route('/package/:packageName')
     .get(function(req, res) {
@@ -128,14 +141,14 @@ exports.router = function() {
           res.status(500);
           res.send(err);
         } else {
-          res.sendStatus(200);  
+          res.send({ packages: results[0] });
         }
       }
-      req.logger.debug('upsertPackage', req.query);
-      if (req.package.id) {
-        req.db.query(qs.update_package, [ req.query.body, req.packman.package.id ], upsertResults);
+      req.logger.debug('upsertPackage', req.body);
+      if (req.packman.package.id) {
+        req.db.query(qs.update_package, [ req.body.body, req.packman.package.id ], upsertResults);
       } else {
-        req.db.query(qs.insert_package, [ req.packman.package.name, req.query.body || '' ], upsertResults);
+        req.db.query(qs.insert_package, [ req.body.body || '' ], upsertResults);
       }
     })
     .delete(function(req, res) {
