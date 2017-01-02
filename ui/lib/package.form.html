@@ -1,14 +1,33 @@
 <div class="row">
   <div class="col-sm-12">
-    <form ng-submit="ctrl.submitForm()" class="form">
-      <h2>{{ ctrl.title }}</h2>
-      <div class="form-group">
-        <label for="description">Package Description</label>
-        <textarea id="description" name="body" ng-model="ctrl.formData.body" class="form-control"></textarea>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>{{ ctrl.title }}</h3></div>
+      <form ng-submit="ctrl.submitForm()" class="form">
+      <div class="panel-body">
+        
+          <div class="form-group">
+            <label for="description">Package Description</label>
+            <textarea id="description" name="body" ng-model="ctrl.formData.body" class="form-control"></textarea>
+          </div>
+
+          <div class="form-group form-buttons">
+            <button class="btn btn-danger" ng-if="ctrl.formData.name" ng-click="ctrl.deletePackage()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+            <button submit="true" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> {{ ctrl.buttonLabel}}</button>
+          </div>
+    
       </div>
-      <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Submit">
-      </div>
-    </form>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="row" ng-if="ctrl.formData.name">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">Items in {{ ctrl.title }}</div>
+      <ul class="list-group">
+        <li class="list-group-item text-right"><a class="btn-text"><span class="glyphicon glyphicon-plus"></span> Add Item</a></li>
+        <li class="list-group-item" ng-repeat="item in ctrl.items">{{ item.name }}</li>
+      </ul>
+    </div>
   </div>
 </div>

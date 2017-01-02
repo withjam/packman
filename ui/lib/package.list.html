@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-striped">
+    <tr ng-repeat="package in ctrl.list" ng-click="ctrl.viewPackage(package)">
+      <td>{{ package.name }}</td>
+      <td>{{ package.body }}</td>
+    </tr>
+    </table>
+  </div>
+</div>

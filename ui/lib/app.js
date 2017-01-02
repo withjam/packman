@@ -64,6 +64,15 @@
         templateUrl: 'templates/home.html',
         controller: 'homeCtrl as ctrl'
       })
+      .when('/packages', {
+        templateUrl: 'templates/package.list.html',
+        resolve: {
+          data: function($http) {
+            return $http.get('/api/packages').then(function(resp) { return resp.data; });
+          }
+        },
+        controller: 'packageListCtrl as ctrl'
+      })
       .when('/addpackage', {
         templateUrl: 'templates/package.form.html',
         controller: 'addPackageCtrl as ctrl'
@@ -73,9 +82,14 @@
         resolve: {
           data: function($http, $route) {
             return $http.get('/api/package/' + $route.current.params.packageName).then(function(response) {
-              console.log('response', response.data.package);
+              //console.log('response', response.data.package);
               return response.data.package;
             })
+          },
+          items: function($http, $route) {
+            return $http.get('/api/package/' + $route.current.params.packageName + '/items').then(function(response) {
+              return response.data.items;
+            });
           }
         },
         controller: 'editPackageCtrl as ctrl'

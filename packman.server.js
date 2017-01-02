@@ -10,7 +10,7 @@ exports.router = function() {
     'insert_package': 'CALL create_new_package(?)',
     'delete_package': 'DELETE FROM packages WHERE ID = ?',
     'list_packages': 'SELECT * FROM packages',
-    'search_packages', 'CALL search_packages(?)',
+    'search_packages': 'CALL search_packages(?)',
     'query_package_items': 'SELECT * FROM package_items WHERE package_id = ?',
     'query_package_pics': 'SELECT * FROM package_photos WHERE package_id = ?'
   }
@@ -83,6 +83,25 @@ exports.router = function() {
       })
     } else {
       res.sendStatus(404);
+    }
+  })
+
+  router.get('/search/packages', function(req, res) {
+    var q = req.query.q;
+    if (q) {
+      req.db.query(qs.search_packages, [ '%' + q + '%' ], function(err, results, fields) {
+        if (err) {
+          req.logger.error('Could not search packages', err);
+          res.sendStatus(500);
+          return;
+        }
+        res.send({
+          results: results,
+          fields: fields
+        });
+      });
+    } else {
+      res.sendStatus(400);
     }
   })
 
