@@ -1,23 +1,26 @@
-CREATE TABLE package_names (
-  id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  label VARCHAR(250)
+CREATE TABLE packages (
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  name VARCHAR(250) NOT NULL UNIQUE,
+  body text,
+  FULLTEXT(body)
 ) Engine=InnoDB;
 
 CREATE TABLE package_items (
-  id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   package_id INT,
   name varchar(200),
   body text,
   FULLTEXT (name,body),
-  FOREIGN KEY (package_id) REFERENCES package_names(id) ON DELETE CASCADE
+  FOREIGN KEY (package_id) REFERENCES packages(id) ON DELETE CASCADE
 ) Engine=InnoDB;
 
 CREATE TABLE package_pics (
-  id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   package_id INT,
   name varchar(200),
   tags text,
+  ctype varchar(150) NOT NULL,
   img longblob NOT NULL,
-  FULLTEXT (name,body),
-  FOREIGN KEY (package_id) REFERENCES package_names(id) ON DELETE CASCADE
+  FULLTEXT (name,tags),
+  FOREIGN KEY (package_id) REFERENCES packages(id) ON DELETE CASCADE
 ) Engine=InnoDB;

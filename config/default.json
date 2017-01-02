@@ -16,5 +16,12 @@
         "path": "./packman-server.log"
       }
     ]
+  },
+  "mysql": {
+    "host": "localhost",
+    "port": 8889,
+    "database": "packman",
+    "user": "root",
+    "password": "root" 
   }
 }
