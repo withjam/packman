@@ -112,7 +112,12 @@ exports.router = function() {
   // CRUD for a single package
   router.route('/package/:packageName')
     .get(function(req, res) {
-      res.send(req.packman);
+      if (req.packman.package.id) {
+        res.send(req.packman);  
+      } else {
+        res.sendStatus(404);
+      }
+      
     })
     .post(function(req, res) {
       // do an upsert

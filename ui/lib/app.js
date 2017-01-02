@@ -64,6 +64,23 @@
         templateUrl: 'templates/home.html',
         controller: 'homeCtrl as ctrl'
       })
+      .when('/addpackage', {
+        templateUrl: 'templates/package.form.html',
+        controller: 'addPackageCtrl as ctrl'
+      })
+      .when('/package/:packageName', {
+        templateUrl: 'templates/package.form.html',
+        resolve: {
+          data: function($http, $route) {
+            $http.get('/api/package/' + $route.current.params.packageName).then(function(response) {
+              console.log('response', response);
+              return response.data.package;
+            })
+          }
+        },
+        controller: 'editPackageCtrl as ctrl'
+
+      })
       .otherwise('/');
 
   }
