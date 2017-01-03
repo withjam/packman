@@ -52,6 +52,31 @@
         });
       };
     };
+
+    ctrl.addItem = function() {
+      ctrl.showItemForm = true;
+      ctrl.selectedItem = { id: 0 };
+    }
+
+    ctrl.editItem = function(item) {
+      ctrl.showItemForm = true;
+      ctrl.selectedItem = item;
+    }
+
+    ctrl.updateItems = function(itemData) {
+      ctrl.showItemForm = false;
+      // will pass back an item if a submission
+      if (itemData) {
+        console.log('got item data');
+        // existing items will have package_id
+        if (itemData.hasOwnProperty('package_id')) {
+          ctrl.selectedItem.name = itemData.name;
+          ctrl.selectedItem.body = itemData.body;
+        } else {
+          ctrl.items.push(itemData);
+        }
+      }
+    }
   }
 
   

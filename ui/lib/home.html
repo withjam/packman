@@ -1,19 +1,31 @@
-<article>
-  <section id="package_scanner">
-    <h2 class="title">Scan a Package</h2>
-    <div><button class="btn btn-primary btn-large" ng-click="ctrl.launchScanner()">Launch Scanner</button>
-    <div class="or">Or</div>
-    <div class="package_name_search">
-      <input type="text" placeholder="Enter package name" class="form-control">
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <section id="package_scanner">
+          <h2 class="title">Scan a Package</h2>
+          <div><button class="btn btn-primary btn-large" ng-click="ctrl.launchScanner()">Launch Scanner</button>
+          <div class="or">Or</div>
+          <div class="package_name_search">
+            <input type="text" placeholder="Enter package name" class="form-control">
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="row-sep"></div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <section id="package_item_search">
+          <h2 class="title">Item Search</h2>
+        </section>
+      </div>
     </div>
-  </section>
-
-  <section class="sep"></section>
-
-  <section id="package_item_search">
-    <h2 class="title">Item Search</h2>
-  </section>
-</article>
+  </div>
+</div>
 <div class="modal fade" ng-show="ctrl.scannerActive" ng-class="{ in: ctrl.scannerActive }">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -30,7 +42,3 @@
     </div>
   </div>
 </div>
-<style>
-.modal.fade.in { display: block; }
-#quaggas-viewport { width: 500px; height: 500px; overflow: hidden; margin: auto;}
-</style>

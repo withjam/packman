@@ -9,6 +9,10 @@ exports.router = function() {
     'update_package': 'UPDATE packages SET body = ? WHERE id = ?',
     'insert_package': 'CALL create_new_package(?)',
     'delete_package': 'DELETE FROM packages WHERE ID = ?',
+    'insert_item': 'INSERT INTO package_items VALUES(NULL,?,?,?)',
+    'update_item': 'UPDATE package_items SET name = ?, body = ? WHERE id = ?',
+    'query_item': 'SELECT * FROM package_items WHERE id = ?',
+    'delete_item': 'DELETE FROM package_items WHERE id = ?',
     'list_packages': 'SELECT * FROM packages',
     'search_packages': 'CALL search_packages(?)',
     'query_package_items': 'SELECT * FROM package_items WHERE package_id = ?',
@@ -112,7 +116,28 @@ exports.router = function() {
     })
     .post(function(req, res) {
       req.logger.trace('post item %s', req.params.itemId)
-      res.sendStatus(200);
+      var id = parseInt(req.params.itemId);
+      if (id === 0) {
+        req.logger.trace('Creating new item', req.body);
+        req.db.query(qs.insert_item, [req.packman.package.id, req.body.name, req.body.body], function(err, results) {
+          if (err) {
+            req.logger.error('Could not create item', err);
+            res.sendStatus(500);
+            return;
+          }
+          res.send(results);
+        });
+      } else {
+        req.logger.trace('Updating item', req.body);
+        req.db.query(qs.update_item, [req.body.name, req.body.body, id], function(err, results) {
+          if (err) {
+            req.logger.error('Could not create item', err);
+            res.sendStatus(500);
+            return;
+          }
+          res.send(results);
+        });
+      }
     })
     .delete(function(req, res) {
       req.logger.trace('delete item %s', req.params.itemId);
@@ -126,7 +151,7 @@ exports.router = function() {
         res.status(500);
         return;
       }
-      res.send(results);
+      res.send({ items: results });
     })
   })
 

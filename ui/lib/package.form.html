@@ -23,11 +23,18 @@
 <div class="row" ng-if="ctrl.formData.name">
   <div class="col-sm-12">
     <div class="panel panel-default">
-      <div class="panel-heading">Items in {{ ctrl.title }}</div>
+      <div class="panel-heading">
+        <small class="pull-right"><a class="btn-text" ng-click="ctrl.addItem()"><span class="glyphicon glyphicon-plus"></span> Add Item</a></small>
+        Items in {{ ctrl.title }}
+      </div>
       <ul class="list-group">
-        <li class="list-group-item text-right"><a class="btn-text"><span class="glyphicon glyphicon-plus"></span> Add Item</a></li>
-        <li class="list-group-item" ng-repeat="item in ctrl.items">{{ item.name }}</li>
+        <li class="list-group-item" ng-repeat="item in ctrl.items" ng-click="ctrl.editItem(item)">{{ item.name }}</li>
       </ul>
     </div>
+  </div>
+</div>
+<div class="modal fade" ng-show="ctrl.showItemForm" ng-class="{ in: ctrl.showItemForm }">
+  <div class="modal-dialog">
+    <packman-item-form packman-package-name="ctrl.title" packman-item="ctrl.selectedItem" packman-item-finished="ctrl.updateItems(itemData)">
   </div>
 </div>
