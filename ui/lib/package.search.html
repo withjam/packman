@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>Search Packages</h3></div>
+      <div class="panel-body">
+        <form class="form form-inline">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">Find:</div>
+              <input type="text" name="q" id="q" ng-model="ctrl.searchForm.q" class="form-control">
+              <div class="input-group-addon" ng-click="ctrl.doSearch()"><span class="glyphicon glyphicon-search"></span></div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <table class="table table-striped">
+      <tr ng-repeat="result in ctrl.results" ng-click="ctrl.gotoPackage(result)">
+        <td>{{ result.name }}</td>
+        <td>{{ result.body }}</td>
+      </tr>
+      </table>
+    </div>
+  </div>
+</div>

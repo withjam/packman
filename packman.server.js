@@ -100,8 +100,7 @@ exports.router = function() {
           return;
         }
         res.send({
-          results: results,
-          fields: fields
+          results: results
         });
       });
     } else {

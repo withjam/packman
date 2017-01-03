@@ -77,6 +77,10 @@
         templateUrl: 'templates/package.form.html',
         controller: 'addPackageCtrl as ctrl'
       })
+      .when('/search/packages', {
+        templateUrl: 'templates/package.search.html',
+        controller: 'packageSearchCtrl as ctrl'
+      })
       .when('/package/:packageName', {
         templateUrl: 'templates/package.form.html',
         resolve: {

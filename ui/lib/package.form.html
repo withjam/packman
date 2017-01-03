@@ -11,8 +11,8 @@
           </div>
 
           <div class="form-group form-buttons">
-            <button class="btn btn-danger" ng-if="ctrl.formData.name" ng-click="ctrl.deletePackage()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-            <button submit="true" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> {{ ctrl.buttonLabel}}</button>
+            <button class="btn btn-danger btn-sm" ng-if="ctrl.formData.name" ng-click="ctrl.deletePackage()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+            <button submit="true" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span> {{ ctrl.buttonLabel}}</button>
           </div>
     
       </div>
@@ -24,7 +24,7 @@
   <div class="col-sm-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <small class="pull-right"><a class="btn-text" ng-click="ctrl.addItem()"><span class="glyphicon glyphicon-plus"></span> Add Item</a></small>
+        <small class="pull-right" style="padding-top: 0.25em"><a class="btn-text" ng-click="ctrl.addItem()"><span class="glyphicon glyphicon-plus"></span> Add</a></small>
         Items in {{ ctrl.title }}
       </div>
       <ul class="list-group">

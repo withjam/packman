@@ -3,9 +3,36 @@
   var app = angular.module('packman');
 
   app
+    .controller('packageSearchCtrl', PackageSearchCtrl)
     .controller('packageListCtrl', PackageListCtrl)
     .controller('addPackageCtrl', AddPackageCtrl)
     .controller('editPackageCtrl', EditPackageCtrl);
+
+  function PackageSearchCtrl($http, $location) {
+    var ctrl = this, s = $location.search();
+
+    ctrl.searchForm = {
+      q: s.q
+    }
+
+    ctrl.gotoPackage = function(p) {
+      $location.path('package/' + p.name);
+    }
+
+    ctrl.doSearch = function() {
+      ctrl.searching = true;
+      if (ctrl.searchForm.q) {
+        $http.get('/api/search/packages?q=' + ctrl.searchForm.q).then(function(resp) {
+          ctrl.searching = false;
+          console.log('search results ', resp);
+          ctrl.results = resp.data.results[0];
+        }, function(resp) {
+          console.log('Error searching', resp);
+          alert('There was an error.');
+        })
+      }
+    }
+  }
 
   function PackageListCtrl(data, $location) {
     var ctrl = this;
@@ -38,7 +65,7 @@
     console.log('edit package', data);
     var ctrl = this;
     ctrl.title = data.name;
-    ctrl.buttonLabel = "Edit Package";
+    ctrl.buttonLabel = "Save Changes";
     ctrl.formData = data;
     ctrl.showItems = true;
     ctrl.expandItems = true;

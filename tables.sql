@@ -46,7 +46,7 @@ BEGIN
   CREATE TEMPORARY TABLE IF NOT EXISTS package_search_tmp AS (SELECT id FROM packages WHERE body like q);
   INSERT INTO package_search_tmp (id) SELECT package_items.package_id as id FROM package_items WHERE package_items.name like q OR package_items.body like q;
   SELECT * FROM packages WHERE id in (SELECT distinct id FROM package_search_tmp);
-  DROP TABLE package_search_tmp;
+  DROP TEMPORARY TABLE if exists package_search_tmp;
 END//
 
 DELIMITER ;

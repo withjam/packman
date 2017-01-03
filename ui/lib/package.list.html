@@ -1,10 +1,16 @@
 <div class="row">
   <div class="col-sm-12">
-    <table class="table table-striped">
-    <tr ng-repeat="package in ctrl.list" ng-click="ctrl.viewPackage(package)">
-      <td>{{ package.name }}</td>
-      <td>{{ package.body }}</td>
-    </tr>
-    </table>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <small class="pull-right" style="margin-top: 0.25em"><a href="/addpackage"><span class="glyphicon glyphicon-plus"> Add</span></a></small>
+        <h3>Package List</h3>
+      </div>
+      <table class="table table-striped">
+      <tr ng-repeat="package in ctrl.list" ng-click="ctrl.viewPackage(package)">
+        <td>{{ package.name }}</td>
+        <td>{{ package.body }}</td>
+      </tr>
+      </table>
+    </div>
   </div>
 </div>
