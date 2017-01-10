@@ -1,4 +1,5 @@
 var express = require('express');
+var cors = require('cors');
 var app = express();
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
@@ -29,6 +30,8 @@ var packmanJs = {
   dest: './ui/www/scripts/packman.js',
   serve: false
 }
+
+app.use(cors());
 
 app.use(sassMiddleware({
   src: path.join(uiPath,'styles'),
