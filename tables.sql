@@ -1,14 +1,14 @@
 CREATE TABLE package_names(
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   name VARCHAR(250) NOT NULL UNIQUE
-) Engine=InnoDB;
+) Engine=MyISAM;
 
 CREATE TABLE packages (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   name VARCHAR(250) NOT NULL UNIQUE,
   body text,
   FULLTEXT(body)
-) Engine=InnoDB;
+) Engine=MyISAM;
 
 CREATE TABLE package_items (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -17,7 +17,7 @@ CREATE TABLE package_items (
   body text,
   FULLTEXT (name,body),
   FOREIGN KEY (package_id) REFERENCES packages(id) ON DELETE CASCADE
-) Engine=InnoDB;
+) Engine=MyISAM;
 
 CREATE TABLE package_pics (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -28,7 +28,7 @@ CREATE TABLE package_pics (
   img longblob NOT NULL,
   FULLTEXT (name,tags),
   FOREIGN KEY (package_id) REFERENCES packages(id) ON DELETE CASCADE
-) Engine=InnoDB;
+) Engine=MyISAM;
 
 DELIMITER //
 CREATE PROCEDURE create_new_package(body text)
