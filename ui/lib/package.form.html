@@ -10,7 +10,13 @@
             <textarea id="description" name="body" ng-model="ctrl.formData.body" class="form-control"></textarea>
           </div>
 
+          <div class="form-group">
+            <label for="size">Package Size</label>
+            <select name="size" ng-model="ctrl.formData.size" ng-options="size as size for size in ctrl.sizes"></select>
+          </div>
+
           <div class="form-group form-buttons">
+            <button class="btn btn-default pull-left" ng-click="ctrl.printBarcodes()" ng-if="ctrl.formData.name">Print <span class="glyphicon glyphicon-barcode" style="font-size: 1.25em;vertical-align:text-bottom;margin-left: 4px;"></span></button>
             <button class="btn btn-danger btn-sm" ng-if="ctrl.formData.name" ng-click="ctrl.deletePackage()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
             <button submit="true" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span> {{ ctrl.buttonLabel}}</button>
           </div>

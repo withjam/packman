@@ -2,30 +2,52 @@
   <div class="col-sm-12">
     <div class="panel panel-default">
       <div class="panel-body">
-        <section id="package_scanner">
-          <h2 class="title">Scan a Package</h2>
-          <div><button class="btn btn-primary btn-large" ng-click="ctrl.launchScanner()">Launch Scanner</button>
-          <div class="or">Or</div>
-          <div class="package_name_search">
-            <input type="text" placeholder="Enter package name" class="form-control">
-          </div>
-        </section>
-      </div>
-    </section>
-  </div>
-</div>
-<div class="row-sep"></div>
-<div class="row">
-  <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <section id="package_item_search">
-          <h2 class="title">Item Search</h2>
+        <section id="package_scanner" class="text-center">
+          <h2 class="title">Find a Package</h2>
+          <form class="form" ng-submit="ctrl.showPackage()" autocomplete="off">
+            <div class="package_name_search">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" placeholder="Enter package name" class="form-control">
+                  <div class="input-group-btn">
+                    <input type="submit" class="btn btn-primary" value="Go!"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="or" style="font-size: 1.5em;margin: 5px auto 15px;opacity: 0.68"> &ndash; or &ndash;</div>
+          <div><button class="btn btn-primary btn-large" ng-click="ctrl.launchScanner()" style="font-size: 1.5em"><span class="glyphicon glyphicon-barcode" style="font-size:1.5em;vertical-align: middle"></span> Scan Barcode</button></div>
         </section>
       </div>
     </div>
   </div>
 </div>
+
+<div class="row-sep"></div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <section id="package_item_search" class="text-center">
+          <h2 class="title">Item Search</h2>
+          <form class="form" ng-submit="ctrl.searchItems()" autocomplete="off">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" name="itemQ" ng-model="ctrl.itemQ" placeholder="Kids clothes..." class="form-control">
+                <div class="input-group-btn">
+                  <input type="submit" class="btn btn-primary" value="Search"></button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" ng-show="ctrl.scannerActive" ng-class="{ in: ctrl.scannerActive }">
   <div class="modal-dialog">
     <div class="modal-content">

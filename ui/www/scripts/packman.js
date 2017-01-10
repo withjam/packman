@@ -8,7 +8,7 @@
 
 
 
-  function HomeCtrl($scope) {
+  function HomeCtrl($scope,$location) {
     var ctrl = this;
 
     function codeDetected(data) {
@@ -51,6 +51,13 @@
     ctrl.endScanner = function() {
       Quagga.stop();
       ctrl.scannerActive = false;
+    }
+
+    ctrl.searchItems = function() {
+      console.log('search items', ctrl.itemQ);
+      if (ctrl.itemQ) {
+        $location.path('search/packages').search('q',ctrl.itemQ);  
+      }
     }
     
   }
@@ -97,7 +104,10 @@
           }
         },
         controller: 'editPackageCtrl as ctrl'
-
+      })
+      .when('/package/:packageName/barcodes', {
+        templateUrl: 'templates/package.barcode.html',
+        controller: 'barcodeCtrl as ctrl'
       })
       .otherwise('/');
 
@@ -158,10 +168,20 @@
   var app = angular.module('packman');
 
   app
+    .controller('barcodeCtrl', BarcodeCtrl)
     .controller('packageSearchCtrl', PackageSearchCtrl)
     .controller('packageListCtrl', PackageListCtrl)
     .controller('addPackageCtrl', AddPackageCtrl)
     .controller('editPackageCtrl', EditPackageCtrl);
+
+
+  function BarcodeCtrl($route,$location) {
+    var ctrl = this;
+    ctrl.name = $route.current.params.packageName;
+    ctrl.done = function() {
+      $location.path('package/' + ctrl.name);
+    }
+  }
 
   function PackageSearchCtrl($http, $location) {
     var ctrl = this, s = $location.search();
@@ -187,6 +207,11 @@
         })
       }
     }
+
+    if (s.q) {
+      console.log('do search');
+      ctrl.doSearch();
+    }
   }
 
   function PackageListCtrl(data, $location) {
@@ -203,6 +228,7 @@
 
   function AddPackageCtrl($http, $location) {
     var ctrl = this;
+        ctrl.sizes = ['small','medium','large','xlarge'];
 
     ctrl.title = "Create New Package";
     ctrl.buttonLabel = "Create Package";
@@ -219,12 +245,17 @@
   function EditPackageCtrl($http, $location, data, items) {
     console.log('edit package', data);
     var ctrl = this;
+        ctrl.sizes = ['small','medium','large','xlarge'];
     ctrl.title = data.name;
     ctrl.buttonLabel = "Save Changes";
     ctrl.formData = data;
     ctrl.showItems = true;
     ctrl.expandItems = true;
     ctrl.items = items;
+
+    ctrl.printBarcodes = function() {
+      $location.path('package/' + ctrl.title + '/barcodes');
+    }
 
     ctrl.deletePackage = function() {
       if ( confirm('Are you sure you want to delete ' + ctrl.title + '?')) {

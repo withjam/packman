@@ -1,6 +1,6 @@
 {
   "port": 9595,
-  "bwipjs": {
+  "bwip": {
     "bcid": "code128",
     "scale": 4,
     "height": 15,

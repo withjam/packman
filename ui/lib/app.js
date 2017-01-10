@@ -8,7 +8,7 @@
 
 
 
-  function HomeCtrl($scope) {
+  function HomeCtrl($scope,$location) {
     var ctrl = this;
 
     function codeDetected(data) {
@@ -51,6 +51,13 @@
     ctrl.endScanner = function() {
       Quagga.stop();
       ctrl.scannerActive = false;
+    }
+
+    ctrl.searchItems = function() {
+      console.log('search items', ctrl.itemQ);
+      if (ctrl.itemQ) {
+        $location.path('search/packages').search('q',ctrl.itemQ);  
+      }
     }
     
   }
@@ -97,7 +104,10 @@
           }
         },
         controller: 'editPackageCtrl as ctrl'
-
+      })
+      .when('/package/:packageName/barcodes', {
+        templateUrl: 'templates/package.barcode.html',
+        controller: 'barcodeCtrl as ctrl'
       })
       .otherwise('/');
 

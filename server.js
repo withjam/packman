@@ -56,6 +56,21 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use('/barcode/:name.png', function(req, res) {
+  req.logger.trace('barcode for %s', req.params.name);
+  bwip.toBuffer(Object.assign({
+    text: req.params.name
+  },config.bwip), function(err, png) {
+    if(err) {
+      req.logger.error('Could not render barcard', err);
+      res.sendStatus(500);
+    } else {
+      res.write(png);
+      res.end();
+    }
+  })
+})
+
 // routes
 app.use('/api', require('./packman.server.js').router());
 
