@@ -14,6 +14,7 @@ var path = require('path');
 var uiPath =  path.join(__dirname, 'ui');
 var staticPath = path.join(uiPath,'www');
 var templatePath = path.join(uiPath, 'lib');
+var merge = require('merge');
 
 var mysql = require('mysql');
 var connection = mysql.createConnection(config.mysql);
@@ -61,7 +62,7 @@ app.use(function(req, res, next) {
 
 app.use('/barcode/:name.png', function(req, res) {
   req.logger.trace('barcode for %s', req.params.name);
-  bwip.toBuffer(Object.assign({
+  bwip.toBuffer(merge({
     text: req.params.name
   },config.bwip), function(err, png) {
     if(err) {
