@@ -6,6 +6,7 @@ CREATE TABLE package_names(
 CREATE TABLE packages (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   name VARCHAR(250) NOT NULL UNIQUE,
+  size varchar(10),
   body text,
   FULLTEXT(body)
 ) Engine=MyISAM;
@@ -31,13 +32,13 @@ CREATE TABLE package_pics (
 ) Engine=MyISAM;
 
 DELIMITER //
-CREATE PROCEDURE create_new_package(body text)
+CREATE PROCEDURE create_new_package(body text, size varchar(10))
 BEGIN
   DECLARE nextid INT;
   DECLARE nextname VARCHAR(250);
   SELECT auto_increment INTO @nextid from information_schema.tables where table_name='packages' and table_schema = DATABASE();
   SELECT name INTO @nextname from package_names WHERE id = @nextid;
-  INSERT INTO packages VALUES(NULL,@nextname,body);
+  INSERT INTO packages VALUES(NULL,@nextname,size,body);
   SELECT * FROM packages WHERE name = @nextname;
 END//
 

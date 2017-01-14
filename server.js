@@ -87,8 +87,8 @@ connection.connect(function(err) {
   if (err) {
     logger.error(err);
   } else {
-    app.listen(config.port, function() {
-      logger.info('Listening on port %d', config.port);
+    app.listen(config.port, config.host, function() {
+      logger.info('Listening on port %s:%d', (config.host || 'localhost'), config.port);
     });  
   } 
 })

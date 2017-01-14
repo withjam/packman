@@ -6,8 +6,8 @@ exports.router = function() {
 
   var qs = {
     'query_package': 'SELECT * FROM packages WHERE name = ?',
-    'update_package': 'UPDATE packages SET body = ? WHERE id = ?',
-    'insert_package': 'CALL create_new_package(?)',
+    'update_package': 'UPDATE packages SET body = ?, size = ? WHERE id = ?',
+    'insert_package': 'CALL create_new_package(?,?)',
     'delete_package': 'DELETE FROM packages WHERE ID = ?',
     'insert_item': 'INSERT INTO package_items VALUES(NULL,?,?,?)',
     'update_item': 'UPDATE package_items SET name = ?, body = ? WHERE id = ?',
@@ -189,9 +189,9 @@ exports.router = function() {
       }
       req.logger.debug('upsertPackage', req.body);
       if (req.packman.package.id) {
-        req.db.query(qs.update_package, [ req.body.body, req.packman.package.id ], upsertResults);
+        req.db.query(qs.update_package, [ req.body.body, req.body.size, req.packman.package.id ], upsertResults);
       } else {
-        req.db.query(qs.insert_package, [ req.body.body || '' ], upsertResults);
+        req.db.query(qs.insert_package, [ (req.body.body || ''), req.body.size ], upsertResults);
       }
     })
     .delete(function(req, res) {
